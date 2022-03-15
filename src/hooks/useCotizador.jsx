@@ -3,8 +3,6 @@ import CotizadorContext from '../context/CotizadorProvider'
 
 export const useCotizador = () => {
   
-  
-  
     return useContext( CotizadorContext )
 }
 export default useCotizador
