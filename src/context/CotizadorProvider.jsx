@@ -3,8 +3,6 @@ import { obtenerDiferenciaYear, calcularPorcentaje, calcularMarca, calcularPlan,
 
 const CotizadorContext = createContext();
 
-
-
 const CotizadorProvider = ({ children }) => {
 
     const [ datos, setDatos ] = useState({
@@ -15,6 +13,7 @@ const CotizadorProvider = ({ children }) => {
 
     const [ error, setError ] = useState('');
     const [ resultado, setResultado ] = useState(0);
+    const [ cargando, setCargando ] = useState(false);
 
     const handleChangeDatos = ( e ) => {
         setDatos({
@@ -24,6 +23,8 @@ const CotizadorProvider = ({ children }) => {
     }
 
     const cotizarSeguro = () => {
+        setCargando(true);
+
         // Estabrecer una base
         let resultado = 2000;
 
@@ -49,7 +50,10 @@ const CotizadorProvider = ({ children }) => {
         // Formater dinero
         resultado = formatearDinero( resultado );
         
-        setResultado( resultado );
+        setTimeout(() => {
+            setResultado( resultado );
+            setCargando(false);
+        }, 2000);
     }
 
     return(
@@ -59,7 +63,9 @@ const CotizadorProvider = ({ children }) => {
                 handleChangeDatos,
                 error,
                 setError,
-                cotizarSeguro
+                cotizarSeguro,
+                resultado,
+                cargando
             }}
         >
             { children }
